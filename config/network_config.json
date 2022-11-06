@@ -1,0 +1,7 @@
+{
+  "protocol": "http",
+  "host": "127.0.0.1",
+  "port": "8000",
+  "ui_port": 40000,
+  "api_path": "/api/v1"
+}

@@ -1,0 +1,15 @@
+{
+  "database": {
+    "mysql": {
+      "host": "only needed if SQL_SOURCE=mysql",
+      "user_name": "only needed if SQL_SOURCE=mysql",
+      "password": "only needed if SQL_SOURCE=mysql"
+    },
+    "sqlite3": {
+      "db_address": "/data/local.db"
+    }
+  },
+  "csv": {
+    "directory": "/data/csv_folder"
+  }
+}
