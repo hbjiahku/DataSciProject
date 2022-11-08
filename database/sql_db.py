@@ -53,8 +53,18 @@ if SQL_SOURCE == "sqlite3":
             df.to_sql(tbl_name, con=self.conn, if_exists="replace")
 
         def read_df_from_db(self, tbl_name) -> pd.DataFrame:
-            df = pd.read_sql_query(sql=f"SELECT * FROM {tbl_name}", con=self.conn)  # .reset_index()
+            sql_query = r"SELECT * FROM '" + tbl_name + r"'"
+            df = pd.read_sql_query(sql=sql_query, con=self.conn)  # .reset_index()
             return df.set_index(df.columns[0])
+
+        def list_all_tables(self):
+            sql_query = """SELECT name FROM sqlite_master
+            WHERE type='table';"""
+
+            cursor = self.conn.cursor()
+            cursor.execute(sql_query)
+
+            return cursor.fetchall()
 
 else:
     from sqlalchemy import create_engine, Table, Column, MetaData
@@ -103,8 +113,8 @@ if __name__ == "__main__":
                                                   source="auto")
     print(s)
     sql_engine = SQLEngine()
-    sql_engine.save_to_db(ticket, s)
-    df = sql_engine.read_from_db(ticket, PD_DATAFRAME)
-    sql_engine.save_to_db(ticket, df)
-    df2 = sql_engine.read_from_db(ticket, PD_DATAFRAME)
+    sql_engine.save(ticket, s)
+    df = sql_engine.read(ticket, PD_DATAFRAME)
+    sql_engine.save(ticket, df)
+    df2 = sql_engine.read(ticket, PD_DATAFRAME)
     print(df)

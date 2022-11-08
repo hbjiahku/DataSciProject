@@ -48,13 +48,13 @@ def get_interface():
 def load_interface(debug_file=True, server_side=False):
     interface_d = get_interface()
     py_file = io.StringIO()
+    if server_side:
+        print(f"from dev.main import *", file=py_file)
+    else:
+        print("from interface.interface import __funct_call", file=py_file)
+    print("", file=py_file)
+    print("", file=py_file)
     for fname in interface_d:
-        if server_side:
-            print(f"from dev.main import *",  file=py_file)
-        else:
-            print("from .interface import __funct_call", file=py_file)
-        print("", file=py_file)
-        print("", file=py_file)
         input_param = []
         for p in interface_d[fname]["param"]:
             arg = str(p[0])

@@ -18,7 +18,7 @@ def download_hist_price_from_yfinance(ticket, start_date: datetime, end_date: da
     data = yf.download(ticket, start=start_date,
                        end=end_date)
     col = ["Date"] + [cn for cn in data.columns]
-    data["Date"] = [date_to_xl(d) for d in data.index]# reset index to excel date
+    data["Date"] = [date_to_xl(d) for d in data.index]  # reset index to excel date
     data.index = range(len(data.index))
     return data[col]
 
@@ -103,6 +103,7 @@ if __name__ == "__main__":
     save_hist_price(ticket, start_date=add_period(today_dt, "1Y", -1), end_date=today_dt, souece="auto", db_type=SQL)
     price = get_hist_price(ticket, start_date=add_period(today_dt, "1Y", -1), end_date=today_dt, source=SQL)
     print(price)
-    update_hist_price(ticket,  start_date=add_period(today_dt, "2Y", -1), end_date=today_dt + 100, souece="auto", db_type=SQL)
+    update_hist_price(ticket, start_date=add_period(today_dt, "2Y", -1), end_date=today_dt + 100, souece="auto",
+                      db_type=SQL)
     price = get_hist_price(ticket, start_date=add_period(today_dt, "2Y", -1), end_date=today_dt + 100, source=SQL)
     print(price)
